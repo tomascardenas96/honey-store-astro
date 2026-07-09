@@ -1,17 +1,36 @@
 ---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 
+// Cargamos todas las entradas de la colección "productos".
+// Devuelve un array, cada elemento tipado según tu esquema Zod.
+const products = await getCollection("productos");
 ---
 
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <title>Apiaré — Miel pura de nuestros apiarios</title>
   </head>
   <body>
-    <h1>Astro</h1>
+    <h1>Nuestras mieles</h1>
+
+    <ul>
+      {
+        products.map((product) => (
+          <li>
+            <Image
+              src={product.data.image}
+              alt={product.data.name}
+              width={400}
+            />
+            <h2>{product.data.name}</h2>
+            <p>{product.data.description}</p>
+            <p>${product.data.price}</p>
+          </li>
+        ))
+      }
+    </ul>
   </body>
 </html>
