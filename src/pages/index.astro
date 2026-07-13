@@ -1,36 +1,24 @@
 ---
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
+import Banner from "@/components/Banner/Banner.astro";
+import Hero from "@/components/Hero/Hero.astro";
+import Gallery from "@/components/Products/Gallery.astro";
+import Base from "@/layouts/Base.astro";
 
 // Cargamos todas las entradas de la colección "productos".
 // Devuelve un array, cada elemento tipado según tu esquema Zod.
 const products = await getCollection("productos");
+import "@fontsource-variable/cormorant-garamond";
+import "@fontsource-variable/mulish";
+import "@fontsource/love-ya-like-a-sister";
+import Footer from "@/components/Footer/Footer.astro";
 ---
 
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Apiaré — Miel pura de nuestros apiarios</title>
-  </head>
-  <body>
-    <h1>Nuestras mieles</h1>
-
-    <ul>
-      {
-        products.map((product) => (
-          <li>
-            <Image
-              src={product.data.image}
-              alt={product.data.name}
-              width={400}
-            />
-            <h2>{product.data.name}</h2>
-            <p>{product.data.description}</p>
-            <p>${product.data.price}</p>
-          </li>
-        ))
-      }
-    </ul>
-  </body>
-</html>
+<Base title="Apiaré — Miel pura de nuestros apiarios">
+  <main class="mt-25">
+    <Hero />
+    <Banner />
+    <Gallery products={products} />
+    <Footer />
+  </main>
+</Base>

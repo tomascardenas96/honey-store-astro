@@ -1,0 +1,28 @@
+---
+import { Image } from "astro:assets";
+import Container from "../Container.astro";
+import BurgerMenuIcon from "./BurgerMenuIcon.astro";
+import CartIcon from "./CartIcon.astro";
+import LogoImage from "@/assets/images/logo.png";
+---
+
+<header
+  class="fixed top-0 w-full border-b border-line bg-ink-on-dark z-20 mask-b-from-19"
+>
+  <Container>
+    <nav class="flex h-21 items-center justify-between">
+      <BurgerMenuIcon size={30} />
+      <div>
+        <Image src={LogoImage} alt="Logo de Apiare" class="w-18 h-18" />
+      </div>
+      <div class="relative">
+        <CartIcon size={26} />
+        <div
+          class="w-4.5 h-4.5 rounded-full bg-honey-500 absolute -top-2 -right-1 flex justify-center items-center"
+        >
+          <p class="font-bold text-xs text-white">2</p>
+        </div>
+      </div>
+    </nav>
+  </Container>
+</header>

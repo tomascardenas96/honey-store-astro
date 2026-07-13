@@ -1,0 +1,52 @@
+---
+import { Image } from "astro:assets";
+import Container from "../Container.astro";
+import Bee from "@/assets/images/bee.png";
+import Jar from "@/assets/images/frasco.jpg";
+---
+
+<article class="py-2 box-border">
+  <div class="relative h-64 bg-banner py-10">
+    <Container>
+      <div class="flex flex-col gap-7">
+        <h1 class="text-white text-sm font-medium tracking-wider">
+          ¿PORQUÉ ELEGIR MIEL NATURAL?
+        </h1>
+        <!-- Linea decorativa del titulo -->
+        <div class="absolute w-10 h-px bg-honey-500 top-17 left-9"></div>
+        <p
+          class="text-[#ffffffd0] font-extralight text-sm leading-6 mb-2 sm:mb-0"
+        >
+          It is a long established fact that a reader will be distracted by the
+          readable content of a page when looking at its layout. The point of
+          using Lorem Ipsum is that it has a more-or-less normal distribution of
+          letters
+        </p>
+        <!-- Imagenes -->
+        <div class="w-50 h-34 self-end -mt-7 relative">
+          <Image
+            src={Bee}
+            alt="Abeja posada sobre una flor"
+            class="absolute w-34 h-34 rounded-full object-cover"
+          />
+          <div
+            class="absolute p-0.5 left-20 bottom-0 rounded-full border-2 border-dashed border-honey-500"
+          >
+            <Image
+              src={Jar}
+              alt="Frasco de vidrio con miel dentro"
+              class="w-28 h-28 rounded-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </div>
+</article>
+
+<style>
+  .bg-banner {
+    background-color:;
+    background: url("/hexagons.svg"), var(--color-honey-950);
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+import { Image } from "astro:assets";
+import Hero from "@/assets/images/hero.png";
+---
+
+<section>
+  <div class="@container relative mx-auto flex max-w-2xl justify-center">
+    <h1
+      class="absolute top-[-2%] z-0 text-[14cqw] font-semibold leading-none tracking-wide text-honey-700 mask-b-from-0%"
+    >
+      HONEY
+    </h1>
+    <Image
+      src={Hero}
+      alt="Imagen hero de la landing page de Apiare"
+      class="relative z-10 h-auto w-full pr-3"
+    />
+    <div class="absolute left-[5%] z-10 hidden">
+      <h2 class="text-xs font-semibold mt-[100%]">
+        PRODUCTOS DE LA <br /> MEJOR CALIDAD
+      </h2>
+      <button>Explorar</button>
+    </div>
+  </div>
+</section>

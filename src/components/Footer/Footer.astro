@@ -1,0 +1,129 @@
+---
+import { Image } from "astro:assets";
+import Logo from "@/assets/images/logo.png";
+import Container from "../Container.astro";
+import FooterSection from "./FooterSection.astro";
+import FooterBottom from "./FooterBottom.astro";
+import PhoneCall from "@/components/icons/PhoneCall.astro";
+import Phone from "@/components/icons/Phone.astro";
+import Mail from "@/components/icons/Mail.astro";
+import Clock from "@/components/icons/Clock.astro";
+import MapPin from "@/components/icons/MapPin.astro";
+import Users from "@/components/icons/Users.astro";
+import Navigation from "@/components/icons/Navigation.astro";
+import Facebook from "@/components/icons/Facebook.astro";
+import Instagram from "@/components/icons/Instagram.astro";
+import Tiktok from "@/components/icons/Tiktok.astro";
+
+const contactItems = [
+  { Icon: Phone, text: "(2281) - 992233", href: "tel:+542281992233" },
+  { Icon: Mail, text: "contacto@gmail.com", href: "mailto:contacto@gmail.com" },
+  { Icon: Clock, text: "Lun - Vie: 9:00 - 18:00" },
+  { Icon: Clock, text: "Sab: 9:00 - 13:00" },
+];
+
+const socials = [
+  { Icon: Facebook, label: "Facebook", href: "https://facebook.com" },
+  { Icon: Instagram, label: "Instagram", href: "https://instagram.com" },
+  { Icon: Tiktok, label: "TikTok", href: "https://tiktok.com" },
+];
+
+const navLinks = [
+  { text: "Inicio", href: "/" },
+  { text: "Nosotros", href: "#nosotros" },
+  { text: "Contacto", href: "#contacto" },
+  { text: "Explorar", href: "#productos" },
+];
+---
+
+<footer class="mt-16">
+  <Container>
+    <div
+      class="flex justify-center items-start h-54 border-b-2 border-honey-500"
+    >
+      <Image src={Logo} alt="Logo de Apiare" class="w-44 object-contain" />
+    </div>
+    <div class="flex flex-col gap-7 py-10">
+      <FooterSection title="Contacto">
+        <PhoneCall slot="icon" size={22} />
+        <ul class="flex flex-col gap-3">
+          {
+            contactItems.map(({ Icon, text, href }) =>
+              href ? (
+                <li>
+                  <a
+                    href={href}
+                    class="flex items-center gap-3 text-sm text-honey-800 transition hover:text-honey-600"
+                  >
+                    <Icon size={18} class="shrink-0 text-honey-500" />
+                    {text}
+                  </a>
+                </li>
+              ) : (
+                <li class="flex items-center gap-3 text-sm text-honey-800">
+                  <Icon size={18} class="shrink-0 text-honey-500" />
+                  {text}
+                </li>
+              ),
+            )
+          }
+        </ul>
+      </FooterSection>
+
+      <FooterSection title="Ubicación">
+        <MapPin slot="icon" size={22} />
+        <p class="flex items-center gap-3 text-sm text-honey-800">
+          <MapPin size={18} class="shrink-0 text-honey-500" />
+          Tucuman 324, Benito Juarez.
+        </p>
+      </FooterSection>
+
+      <FooterSection title="Seguínos">
+        <Users slot="icon" size={22} />
+        <ul class="flex items-center gap-3">
+          {
+            socials.map(({ Icon, label, href }) => (
+              <li>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  class="grid size-11 place-items-center rounded-full border border-honey-400 text-honey-500 transition hover:-translate-y-0.5 hover:border-honey-500 hover:bg-honey-500 hover:text-honey-25"
+                >
+                  <Icon size={20} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </FooterSection>
+
+      <FooterSection title="Navegación">
+        <Navigation slot="icon" size={22} />
+        <nav>
+          <ul
+            class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-honey-800"
+          >
+            {
+              navLinks.map(({ text, href }, i) => (
+                <li class="flex items-center gap-3">
+                  <a href={href} class="transition hover:text-honey-600">
+                    {text}
+                  </a>
+                  {i < navLinks.length - 1 && (
+                    <span class="text-honey-300" aria-hidden="true">
+                      |
+                    </span>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </FooterSection>
+    </div>
+
+    <FooterBottom />
+  </Container>
+</footer>
