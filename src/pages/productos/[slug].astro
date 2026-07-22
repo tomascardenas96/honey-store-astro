@@ -1,0 +1,60 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import Base from "@/layouts/Base.astro";
+import "@fontsource-variable/cormorant-garamond";
+import "@fontsource-variable/mulish";
+
+// Una ruta pre-generada por cada producto de la colección.
+// El slug del archivo (p. ej. "honey-md") se convierte en la URL /productos/honey-md.
+export async function getStaticPaths() {
+  const products = await getCollection("productos");
+  return products.map((product) => ({
+    params: { slug: product.id },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: CollectionEntry<"productos">;
+}
+
+const { product } = Astro.props;
+const { name, description, image, price } = product.data;
+---
+
+<Base title={`${name} — Apiaré`}>
+  <main class="mt-25 mx-auto max-w-5xl px-6 pb-section">
+    <a
+      href="/"
+      class="inline-flex items-center gap-2 font-body text-sm text-honey-700 transition hover:text-honey-900"
+    >
+      ← Volver
+    </a>
+
+    <div class="mt-8 grid gap-10 lg:grid-cols-2 lg:items-center">
+      <Image
+        src={image}
+        alt={name}
+        class="w-full rounded-card object-cover shadow-card"
+      />
+
+      <div class="flex flex-col gap-6">
+        <h1 class="font-display text-3xl">{name}</h1>
+        <p class="font-body text-base leading-7 text-[#000000cb]">
+          {description}
+        </p>
+        <div
+          class="mt-2 flex items-center justify-between border-t border-[#828282] pt-6"
+        >
+          <span class="text-2xl font-semibold">${price}</span>
+          <button
+            class="border-2 px-8 py-3 text-md tracking-wide transition hover:bg-honey-500 hover:text-white"
+          >
+            AÑADIR
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</Base>
