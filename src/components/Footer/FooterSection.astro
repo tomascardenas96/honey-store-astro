@@ -1,0 +1,37 @@
+---
+// Sección reutilizable del footer: círculo con icono + título con subrayado,
+// y un slot para el contenido (que queda alineado bajo el título).
+// El icono se pasa por el slot nombrado `icon`.
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<section
+  class="grid grid-cols-[44px_1fr] lg:grid-cols-[20px_1fr] grid-rows-[max-content_max-content] gap-3 lg:gap-5"
+>
+  <!-- Icono y titulo -->
+  <div class="col-span-full flex gap-3 lg:gap-2 items-center">
+    <span
+      class="grid size-11 lg:size-6 shrink-0 place-items-center lg:place-items-start rounded-full border lg:border-none border-honey-400 text-honey-500 lg:-mt-2"
+    >
+      <slot name="icon" />
+    </span>
+
+    <div class="flex flex-col gap-1.5 mb-1">
+      <h3 class="text-md lg:text-sm font-semibold text-honey-800 uppercase">
+        {title}
+      </h3>
+      <span class="h-0.5 w-10 lg:w-8 rounded-full bg-honey-300 lg:-ml-0.5"
+      ></span>
+    </div>
+  </div>
+  <!-- Contenido -->
+  <div
+    class="col-start-2 col-end-3 lg:col-span-full flex flex-1 flex-col gap-4 pt-1"
+  >
+    <slot />
+  </div>
+</section>

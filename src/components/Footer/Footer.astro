@@ -1,0 +1,134 @@
+---
+import { Image } from "astro:assets";
+import Logo from "@/assets/images/logo.png";
+import Container from "../Container.astro";
+import FooterSection from "./FooterSection.astro";
+import FooterBottom from "./FooterBottom.astro";
+import PhoneCall from "@/components/icons/PhoneCall.astro";
+import Phone from "@/components/icons/Phone.astro";
+import Mail from "@/components/icons/Mail.astro";
+import Clock from "@/components/icons/Clock.astro";
+import MapPin from "@/components/icons/MapPin.astro";
+import Users from "@/components/icons/Users.astro";
+import Navigation from "@/components/icons/Navigation.astro";
+import Facebook from "@/components/icons/Facebook.astro";
+import Instagram from "@/components/icons/Instagram.astro";
+import Tiktok from "@/components/icons/Tiktok.astro";
+
+const contactItems = [
+  { Icon: Phone, text: "(2281) - 992233", href: "tel:+542281992233" },
+  { Icon: Mail, text: "contacto@gmail.com", href: "mailto:contacto@gmail.com" },
+  { Icon: Clock, text: "Lun - Vie: 9:00 - 18:00" },
+  { Icon: Clock, text: "Sab: 9:00 - 13:00" },
+];
+
+const socials = [
+  { Icon: Facebook, label: "Facebook", href: "https://facebook.com" },
+  { Icon: Instagram, label: "Instagram", href: "https://instagram.com" },
+  { Icon: Tiktok, label: "TikTok", href: "https://tiktok.com" },
+];
+
+const navLinks = [
+  { text: "Inicio", href: "/" },
+  { text: "Nosotros", href: "#nosotros" },
+  { text: "Contacto", href: "#contacto" },
+  { text: "Explorar", href: "#productos" },
+];
+---
+
+<footer class="mt-16 lg:pb-18">
+  <Container>
+    <div
+      class="flex justify-center items-start h-46 lg:h-39 border-b border-honey-500"
+    >
+      <Image
+        src={Logo}
+        alt="Logo de Apiare"
+        class="w-36 lg:w-30 object-contain"
+      />
+    </div>
+    <div class="flex flex-col lg:grid lg:grid-cols-4 gap-8 py-10 lg:py-10">
+      <FooterSection title="Navegación">
+        <Navigation slot="icon" size={19} />
+        <nav>
+          <ul
+            class="flex lg:flex-col flex-wrap items-center lg:items-start gap-x-3 gap-y-2 lg:gap-y-4 text-sm text-honey-800"
+          >
+            {
+              navLinks.map(({ text, href }, i) => (
+                <li class="flex items-center gap-3">
+                  <a href={href} class="transition hover:text-honey-600">
+                    {text}
+                  </a>
+                  {i < navLinks.length - 1 && (
+                    <span class="text-honey-300 lg:hidden" aria-hidden="true">
+                      |
+                    </span>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </FooterSection>
+
+      <FooterSection title="Contacto">
+        <PhoneCall slot="icon" size={19} />
+        <ul class="flex flex-col gap-3 lg:gap-4">
+          {
+            contactItems.map(({ Icon, text, href }) =>
+              href ? (
+                <li>
+                  <a
+                    href={href}
+                    class="flex items-center gap-3 text-sm text-honey-800 transition hover:text-honey-600"
+                  >
+                    <Icon size={18} class="shrink-0 text-honey-500 lg:hidden" />
+                    {text}
+                  </a>
+                </li>
+              ) : (
+                <li class="flex items-center gap-3 text-sm text-honey-800">
+                  <Icon size={18} class="shrink-0 text-honey-500 lg:hidden" />
+                  {text}
+                </li>
+              ),
+            )
+          }
+        </ul>
+      </FooterSection>
+
+      <FooterSection title="Ubicación">
+        <MapPin slot="icon" size={19} />
+        <p class="flex items-center gap-3 text-sm text-honey-800 lg:leading-6">
+          <MapPin size={18} class="shrink-0 text-honey-500 lg:hidden" />
+          Tucuman 324, Benito Juarez.
+        </p>
+      </FooterSection>
+
+      <FooterSection title="Seguínos">
+        <Users slot="icon" size={19} />
+        <ul class="flex items-center lg:flex-col lg:items-start gap-3 lg:gap-4">
+          {
+            socials.map(({ Icon, label, href }) => (
+              <li class="flex gap-2">
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  class="grid size-11 lg:size-auto place-items-center rounded-full border lg:border-none border-honey-400 text-honey-500 transition hover:-translate-y-0.5 hover:border-honey-500 hover:bg-honey-500 hover:text-honey-25"
+                >
+                  <Icon size={19} />
+                </a>
+                <p class="hidden lg:block text-honey-800 text-sm">{label}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </FooterSection>
+    </div>
+
+    <FooterBottom />
+  </Container>
+</footer>

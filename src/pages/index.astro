@@ -1,17 +1,26 @@
 ---
+import { getCollection } from "astro:content";
+import Banner from "@/components/Banner/Banner.astro";
+import Hero from "@/components/Hero/Hero.astro";
+import Gallery from "@/components/Products/Gallery.astro";
+import Base from "@/layouts/Base.astro";
 
+// Cargamos todas las entradas de la colección "productos".
+// Devuelve un array, cada elemento tipado según tu esquema Zod.
+const products = await getCollection("productos");
+import "@fontsource-variable/cormorant-garamond";
+import "@fontsource-variable/mulish";
+import "@fontsource/love-ya-like-a-sister";
+import Footer from "@/components/Footer/Footer.astro";
+import Ads from "@/components/Ads/Ads.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<Base title="Apiaré — Miel pura de nuestros apiarios">
+  <main class="mt-25">
+    <Hero />
+    <Banner />
+    <Gallery products={products} />
+    <Ads />
+    <Footer />
+  </main>
+</Base>
