@@ -13,24 +13,55 @@ function initCarousel(root: HTMLElement) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const behavior = (): ScrollBehavior => (reduced.matches ? "auto" : "smooth");
 
+  dots.forEach((dot) => {
+    dot.dataset.label = dot.getAttribute("aria-label") ?? "";
+  });
+
+  // Posiciones de scroll reales del carril: la que centra cada slide, acotada
+  // al rango alcanzable. Cuando caben varios slides por vista, varios colapsan
+  // en la misma posición y forman una sola "página".
+  let pages: number[] = [];
   let current = 0;
 
-  // Centra el slide `index` dentro del carril (coincide con snap-center).
+  const measure = () => {
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    pages = [];
+    for (const slide of slides) {
+      const target =
+        slide.offsetLeft - (track.clientWidth - slide.offsetWidth) / 2;
+      const position = Math.max(0, Math.min(target, maxScroll));
+      if (pages.length === 0 || position - pages[pages.length - 1] > 1) {
+        pages.push(position);
+      }
+    }
+  };
+
+  const updateDots = () => {
+    dots.forEach((dot, i) => {
+      const visible = i < pages.length;
+      dot.style.display = visible ? "" : "none";
+      if (visible) {
+        dot.setAttribute(
+          "aria-label",
+          pages.length === dots.length
+            ? dot.dataset.label!
+            : `Ir a la página ${i + 1} de ${pages.length}`,
+        );
+      }
+    });
+  };
+
   const goTo = (index: number) => {
-    const slide = slides[Math.max(0, Math.min(index, slides.length - 1))];
-    const left = slide.offsetLeft - (track.clientWidth - slide.offsetWidth) / 2;
-    track.scrollTo({ left, behavior: behavior() });
+    const clamped = Math.max(0, Math.min(index, pages.length - 1));
+    track.scrollTo({ left: pages[clamped], behavior: behavior() });
   };
 
   // Actualiza dot activo y estado (disabled) de las flechas según el scroll.
   const sync = () => {
-    const viewportCenter = track.scrollLeft + track.clientWidth / 2;
     let closest = 0;
     let min = Infinity;
-    slides.forEach((slide, i) => {
-      const distance = Math.abs(
-        slide.offsetLeft + slide.offsetWidth / 2 - viewportCenter,
-      );
+    pages.forEach((position, i) => {
+      const distance = Math.abs(position - track.scrollLeft);
       if (distance < min) {
         min = distance;
         closest = i;
@@ -67,7 +98,14 @@ function initCarousel(root: HTMLElement) {
   if (nextBtn) nextBtn.addEventListener("click", () => goTo(current + 1));
   dots.forEach((dot, i) => dot.addEventListener("click", () => goTo(i)));
 
-  window.addEventListener("resize", sync);
+  window.addEventListener("resize", () => {
+    measure();
+    updateDots();
+    sync();
+  });
+
+  measure();
+  updateDots();
   sync();
 }
 

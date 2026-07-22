@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  /* COLORES DE FUENTE */
+  --color-primary-dark: rgb(240, 240, 240);
+
   /* COLORES */
   --color-honey-25: oklch(0.97 0 85);
   --color-honey-50: oklch(0.97 0.03 85);
@@ -16,7 +19,7 @@
   --color-honey-950: oklch(0.16 0.055 45);
 
   /* STYLES */
-  --color-surface-dark: var(--color-honey-950);
+  --color-surface-dark: var(--color-honey-900);
   --color-ink-on-dark: var(--color-honey-25);
   --color-line: var(--color-honey-50);
 
@@ -50,6 +53,8 @@
 
   /* MOVIMIENTO */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* BREAKPOINTS */
 }
 
 @layer base {

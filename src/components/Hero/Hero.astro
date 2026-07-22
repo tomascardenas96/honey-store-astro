@@ -1,25 +1,45 @@
 ---
 import { Image } from "astro:assets";
 import Hero from "@/assets/images/hero.png";
+import Search from "../icons/Search.astro";
 ---
 
-<section>
-  <div class="@container relative mx-auto flex max-w-2xl justify-center">
+<section class="py-4">
+  <div
+    class="@container relative mx-auto flex max-w-2xl justify-center md:pt-2 lg:pt-4 text-surface-dark"
+  >
     <h1
-      class="absolute top-[-2%] z-0 text-[14cqw] font-semibold leading-none tracking-wide text-honey-700 mask-b-from-0%"
+      class="absolute top-[-2%] lg:top-[1%] z-0 text-[15cqw] md:text-[16cqw] font-semibold leading-none tracking-[0.01rem] text-honey-800 mask-b-from-0%"
     >
       HONEY
     </h1>
+
+    <div
+      class="absolute left-[6%] z-10 hidden h-full flex-col justify-center md:flex text-sm pb-28"
+    >
+      <h2 class="text-sm font-semibold leading-[1.45rem]">
+        PRODUCTOS DE LA <br /> MEJOR CALIDAD
+      </h2>
+      <button
+        class="py-1.5 w-4/5 bg-honey-400 rounded-full mt-4 flex justify-center gap-1"
+        >Explorar
+        <Search size="16" class="h-full" />
+      </button>
+    </div>
+
     <Image
       src={Hero}
       alt="Imagen hero de la landing page de Apiare"
       class="relative z-10 h-auto w-full pr-3"
     />
-    <div class="absolute left-[5%] z-10 hidden">
-      <h2 class="text-xs font-semibold mt-[100%]">
-        PRODUCTOS DE LA <br /> MEJOR CALIDAD
-      </h2>
-      <button>Explorar</button>
+
+    <div
+      class="hidden md:flex absolute right-[6%] h-full w-40 flex-col items-end justify-center pb-3"
+    >
+      <div class="font-display-secondary tracking-wide leading-3">
+        <h3 class="text-3xl">MIEL</h3>
+        <span>100% pura</span>
+      </div>
     </div>
   </div>
 </section>

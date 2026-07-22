@@ -10,12 +10,19 @@ import LogoImage from "@/assets/images/logo.png";
   class="fixed top-0 w-full border-b border-line bg-ink-on-dark z-20 mask-b-from-19"
 >
   <Container>
-    <nav class="flex h-21 items-center justify-between">
-      <BurgerMenuIcon size={30} />
-      <div>
+    <nav class="flex h-21 items-center justify-between lg:grid lg:grid-cols-3">
+      <BurgerMenuIcon size={30} class="lg:hidden" />
+      <ul class="hidden lg:flex gap-6 text-xs">
+        <li>Inicio</li>
+        <li>Nosotros</li>
+        <li>Contacto</li>
+        <li>Explorar</li>
+      </ul>
+      <div class="lg:grid lg:place-content-center">
         <Image src={LogoImage} alt="Logo de Apiare" class="w-18 h-18" />
       </div>
-      <div class="relative">
+      <div class="relative lg:flex lg:justify-end lg:items-center lg:gap-3">
+        <p class="hidden text-xs lg:flex">CARRITO [2]</p>
         <CartIcon size={26} />
         <div
           class="w-4.5 h-4.5 rounded-full bg-honey-400 absolute -top-2 -right-1 flex justify-center items-center"
