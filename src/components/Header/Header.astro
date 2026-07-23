@@ -7,12 +7,16 @@ import LogoImage from "@/assets/images/logo.png";
 ---
 
 <header
-  class="fixed top-0 w-full border-b border-line bg-ink-on-dark z-20 mask-b-from-19"
+  class="fixed top-0 w-full border-b border-line bg-ink-on-dark z-20 mask-b-from-19 xl:mask-b-from-25 text-honey-900"
 >
   <Container>
-    <nav class="flex h-21 items-center justify-between lg:grid lg:grid-cols-3">
+    <nav
+      class="flex h-21 xl:h-28 items-center justify-between lg:grid lg:grid-cols-3"
+    >
       <BurgerMenuIcon size={30} class="lg:hidden" />
-      <ul class="hidden lg:flex gap-6 text-xs">
+      <ul
+        class="hidden lg:flex gap-6 2xl:gap-7 text-xs xl:text-xs 2xl:text-sm xl:font-semibold"
+      >
         <li>Inicio</li>
         <li>Nosotros</li>
         <li>Contacto</li>
@@ -22,7 +26,7 @@ import LogoImage from "@/assets/images/logo.png";
         <Image src={LogoImage} alt="Logo de Apiare" class="w-18 h-18" />
       </div>
       <div class="relative lg:flex lg:justify-end lg:items-center lg:gap-3">
-        <p class="hidden text-xs lg:flex">CARRITO [2]</p>
+        <p class="hidden text-sm font-semibold lg:flex">CARRITO [2]</p>
         <CartIcon size={26} />
         <div
           class="w-4.5 h-4.5 rounded-full bg-honey-400 absolute -top-2 -right-1 flex justify-center items-center"

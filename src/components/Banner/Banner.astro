@@ -1,29 +1,29 @@
 ---
 import { Image } from "astro:assets";
-import Container from "../Container.astro";
+import BannerContainer from "../BannerContainer.astro";
 import Bee from "@/assets/images/bee.png";
 import Jar from "@/assets/images/frasco.jpg";
 ---
 
 <article class="py-2 box-border">
-  <div class="relative h-64 md:h-auto bg-banner py-10 lg:py-11">
-    <Container>
+  <div class="relative md:h-auto bg-banner py-14 lg:py-11 xl:py-12 2xl:py-14">
+    <BannerContainer>
       <div
         class="flex flex-col gap-7 lg:gap-0 md:grid md:grid-cols-2 lg:grid-cols-[1fr_0.9fr]"
       >
-        <div class="flex flex-col gap-7">
+        <div class="flex flex-col gap-9 2xl:gap-9 relative">
           <h1
-            class="text-primary-dark text-md md:text-sm lg:text-md font-semibold tracking-wider"
+            class="text-primary-dark text-md md:text-sm lg:text-md 2xl:text-base font-semibold tracking-wider"
           >
             ¿PORQUÉ ELEGIR MIEL NATURAL?
           </h1>
           <!-- Linea decorativa del titulo -->
           <div
-            class="absolute w-10 h-px bg-honey-500 top-18 left-9 md:left-14 lg:left-28"
+            class="absolute w-10 h-px bg-honey-500 top-8 md:top-7 2xl:top-9 left-3 md:left-3 lg:left-3 xl:left-3"
           >
           </div>
           <p
-            class="text-primary-dark font-extralight text-xs lg:text-sm leading-6 mb-2 sm:mb-0 md:max-w-sm lg:max-w-md"
+            class="text-description-dark font-extralight text-xs lg:text-sm 2xl:text-base leading-6 xl:leading-7 2xl:leading-8 mb-2 sm:mb-4 md:max-w-sm lg:max-w-md 2xl:max-w-lg"
           >
             It is a long established fact that a reader will be distracted by
             the readable content of a page when looking at its layout. The point
@@ -32,24 +32,24 @@ import Jar from "@/assets/images/frasco.jpg";
           </p>
         </div>
         <!-- Imagenes -->
-        <div class="w-50 md:w-auto h-34 md:h-40 self-end -mt-7 relative">
+        <div class="w-50 md:w-auto h-0 md:h-40 self-end -mt-7 relative">
           <Image
             src={Bee}
             alt="Abeja posada sobre una flor"
-            class="absolute w-34 md:w-50 lg:w-53 h-34 md:h-50 lg:h-53 rounded-full object-cover md:right-15 md:top-7 lg:top-3"
+            class="absolute w-34 md:w-50 lg:w-53 xl:w-64 2xl:w-72 h-34 md:h-50 lg:h-53 xl:h-64 2xl:h-72 rounded-full object-cover md:right-15 xl:right-24 2xl:right-29 md:top-7 lg:top-3 xl:-top-6 2xl:-top-14"
           />
           <div
-            class="absolute p-0.5 left-20 md:left-auto bottom-0 md:-bottom-19 lg:-bottom-23 md:right-0 rounded-full border-2 border-dashed border-honey-500"
+            class="absolute p-0.5 xl:p-1 left-20 md:left-auto -bottom-37 md:-bottom-19 lg:-bottom-23 xl:-bottom-26 md:right-0 rounded-full border-2 border-dashed border-honey-500"
           >
             <Image
               src={Jar}
               alt="Frasco de vidrio con miel dentro"
-              class="w-28 md:w-34 lg:w-40 h-28 md:h-34 lg:h-40 rounded-full object-cover"
+              class="w-28 md:w-34 lg:w-40 xl:w-50 h-28 md:h-34 lg:h-40 xl:h-50 rounded-full object-cover"
             />
           </div>
         </div>
       </div>
-    </Container>
+    </BannerContainer>
   </div>
 </article>
 

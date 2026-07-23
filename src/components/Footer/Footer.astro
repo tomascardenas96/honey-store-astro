@@ -36,7 +36,7 @@ const navLinks = [
 ];
 ---
 
-<footer class="mt-16 lg:pb-18">
+<footer class="mt-16 lg:pb-18 xl:pb-8 2xl:pb-12">
   <Container>
     <div
       class="flex justify-center items-start h-46 lg:h-39 border-b border-honey-500"
@@ -44,15 +44,17 @@ const navLinks = [
       <Image
         src={Logo}
         alt="Logo de Apiare"
-        class="w-36 lg:w-30 object-contain"
+        class="w-36 lg:w-30 2xl:w-34 object-contain"
       />
     </div>
-    <div class="flex flex-col lg:grid lg:grid-cols-4 gap-8 py-10 lg:py-10">
+    <div
+      class="flex flex-col lg:grid lg:grid-cols-4 gap-8 py-10 lg:py-10 2xl:py-12"
+    >
       <FooterSection title="Navegación">
         <Navigation slot="icon" size={19} />
         <nav>
           <ul
-            class="flex lg:flex-col flex-wrap items-center lg:items-start gap-x-3 gap-y-2 lg:gap-y-4 text-sm text-honey-800"
+            class="flex lg:flex-col flex-wrap items-center lg:items-start gap-x-3 gap-y-2 lg:gap-y-4 2xl:gap-y-5 text-sm text-honey-800"
           >
             {
               navLinks.map(({ text, href }, i) => (
@@ -74,7 +76,7 @@ const navLinks = [
 
       <FooterSection title="Contacto">
         <PhoneCall slot="icon" size={19} />
-        <ul class="flex flex-col gap-3 lg:gap-4">
+        <ul class="flex flex-col gap-3 lg:gap-4 2xl:gap-5">
           {
             contactItems.map(({ Icon, text, href }) =>
               href ? (
@@ -108,7 +110,9 @@ const navLinks = [
 
       <FooterSection title="Seguínos">
         <Users slot="icon" size={19} />
-        <ul class="flex items-center lg:flex-col lg:items-start gap-3 lg:gap-4">
+        <ul
+          class="flex items-center lg:flex-col lg:items-start gap-3 lg:gap-4 2xl:gap-5"
+        >
           {
             socials.map(({ Icon, label, href }) => (
               <li class="flex gap-2">

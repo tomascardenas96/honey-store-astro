@@ -3,6 +3,7 @@
 @theme {
   /* COLORES DE FUENTE */
   --color-primary-dark: rgb(240, 240, 240);
+  --color-description-dark: rgb(199, 199, 199);
 
   /* COLORES */
   --color-honey-25: oklch(0.97 0 85);
@@ -24,9 +25,9 @@
   --color-line: var(--color-honey-50);
 
   /* FUENTES */
-  --font-display: "Cormorant Garamond", serif;
+  --font-display: "Cormorant Garamond Variable", "Cormorant Garamond", serif;
   --font-display-secondary: "Love Ya Like A Sister", cursive;
-  --font-body: "Mulish", sans-serif;
+  --font-body: "Mulish Variable", "Mulish", sans-serif;
 
   /* TEXTO */
   --text-sm: clamp(0.85rem, 0.82rem + 0.15vw, 0.94rem);
@@ -54,7 +55,8 @@
   /* MOVIMIENTO */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* BREAKPOINTS */
+  /* CONTAINERS */
+  --container-9xl: 80rem;
 }
 
 @layer base {
