@@ -9,6 +9,7 @@ import Search from "../icons/Search.astro";
     class="@container relative mx-auto flex max-w-2xl 2xl:max-w-3xl justify-center md:pt-2 lg:pt-4 text-honey-900"
   >
     <h1
+      data-reveal="down"
       class="absolute top-[-2%] lg:top-[1%] xl:top-[-1%] z-0 text-[15cqw] md:text-[16cqw] font-extrabold leading-none tracking-[0.01rem]
       text-honey-700 mask-b-from-0% xl:px-2"
     >
@@ -16,6 +17,8 @@ import Search from "../icons/Search.astro";
     </h1>
 
     <div
+      data-reveal="left"
+      data-reveal-delay="220"
       class="absolute left-[6%] xl:left-[4%] z-10 hidden h-full flex-col justify-center md:flex text-sm pb-28"
     >
       <h2 class="text-sm font-bold leading-[1.45rem] 2xl:leading-6">
@@ -31,10 +34,14 @@ import Search from "../icons/Search.astro";
     <Image
       src={Hero}
       alt="Imagen hero de la landing page de Apiare"
+      data-reveal="zoom"
+      data-reveal-delay="80"
       class="relative z-10 h-auto w-full pr-3"
     />
 
     <div
+      data-reveal="right"
+      data-reveal-delay="220"
       class="hidden md:flex absolute right-[6%] xl:right-[4%] h-full w-40 flex-col items-end justify-center pb-3"
     >
       <div class="font-display-secondary tracking-wide leading-3">

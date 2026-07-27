@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./reveal.css";
 
 @theme {
   /* COLORES DE FUENTE */

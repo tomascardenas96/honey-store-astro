@@ -1,0 +1,74 @@
+/* Animaciones de entrada y salida del viewport.
+   Marcá cualquier elemento con `data-reveal` (opcionalmente con una variante:
+   up | down | left | right | fade | zoom) y el script `@/scripts/reveal` alterna
+   `data-reveal-state` entre "in" y "out" según entre o salga del viewport.
+
+   El estado oculto solo se aplica bajo `html.reveal-ready`, clase que agrega el
+   propio JS: si el script no carga, el contenido queda visible igual. */
+
+@layer components {
+  [data-reveal] {
+    /* Distancia y tiempos: se pueden pisar por elemento con una clase o estilo
+       inline (ej. style="--reveal-distance: 4rem"). */
+    --reveal-distance: 2rem;
+    --reveal-duration: 700ms;
+    --reveal-delay: 0ms;
+
+    /* Estado oculto al entrar y al salir por abajo. */
+    --reveal-hidden: translate3d(0, var(--reveal-distance), 0);
+    /* Estado oculto al salir por arriba: sigue el sentido del scroll. */
+    --reveal-hidden-top: translate3d(0, calc(var(--reveal-distance) * -1), 0);
+  }
+
+  [data-reveal="down"] {
+    --reveal-hidden: translate3d(0, calc(var(--reveal-distance) * -1), 0);
+    --reveal-hidden-top: var(--reveal-hidden);
+  }
+
+  [data-reveal="left"] {
+    --reveal-hidden: translate3d(calc(var(--reveal-distance) * -1), 0, 0);
+    --reveal-hidden-top: var(--reveal-hidden);
+  }
+
+  [data-reveal="right"] {
+    --reveal-hidden: translate3d(var(--reveal-distance), 0, 0);
+    --reveal-hidden-top: var(--reveal-hidden);
+  }
+
+  [data-reveal="fade"] {
+    --reveal-hidden: none;
+    --reveal-hidden-top: none;
+  }
+
+  /* Escala hacia adentro: no desborda su caja, seguro dentro de contenedores
+     con overflow (por ejemplo el carrusel de productos). */
+  [data-reveal="zoom"] {
+    --reveal-hidden: scale(0.94);
+    --reveal-hidden-top: var(--reveal-hidden);
+  }
+
+  html.reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: var(--reveal-hidden);
+    transition:
+      opacity var(--reveal-duration) var(--ease-out-soft) var(--reveal-delay),
+      transform var(--reveal-duration) var(--ease-out-soft) var(--reveal-delay);
+  }
+
+  html.reveal-ready [data-reveal][data-reveal-edge="top"] {
+    transform: var(--reveal-hidden-top);
+  }
+
+  html.reveal-ready [data-reveal][data-reveal-state="in"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.reveal-ready [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}

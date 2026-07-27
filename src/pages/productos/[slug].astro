@@ -25,6 +25,7 @@ const { name, description, image, price } = product.data;
   <main class="mt-25 mx-auto max-w-5xl px-6 pb-section">
     <a
       href="/"
+      data-reveal="fade"
       class="inline-flex items-center gap-2 font-body text-sm text-honey-700 transition hover:text-honey-900"
     >
       ← Volver
@@ -34,10 +35,15 @@ const { name, description, image, price } = product.data;
       <Image
         src={image}
         alt={name}
+        data-reveal="left"
         class="w-full rounded-card object-cover shadow-card"
       />
 
-      <div class="flex flex-col gap-6">
+      <div
+        data-reveal="right"
+        data-reveal-delay="120"
+        class="flex flex-col gap-6"
+      >
         <h1 class="font-display text-3xl">{name}</h1>
         <p class="font-body text-base leading-7 text-[#000000cb]">
           {description}
