@@ -11,6 +11,7 @@ const productos = defineCollection({
   // Astro te lo inyecta para poder validar archivos de imagen.
   schema: ({ image }) =>
     z.object({
+      id: z.string(),
       name: z.string(),
 
       // Obligatoria: decidiste que toda miel tiene descripción.

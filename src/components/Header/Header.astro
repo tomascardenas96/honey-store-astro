@@ -3,7 +3,10 @@ import { Image } from "astro:assets";
 import Container from "../Container.astro";
 import BurgerMenuIcon from "./BurgerMenuIcon.astro";
 import CartIcon from "./CartIcon.astro";
+import CartCount from "@/components/Cart/CartCount";
 import LogoImage from "@/assets/images/logo.png";
+
+const navItemsStyle = "cursor-pointer";
 ---
 
 <header
@@ -17,10 +20,10 @@ import LogoImage from "@/assets/images/logo.png";
       <ul
         class="hidden lg:flex gap-6 2xl:gap-7 text-xs xl:text-xs 2xl:text-sm xl:font-semibold"
       >
-        <li>Inicio</li>
-        <li>Nosotros</li>
-        <li>Contacto</li>
-        <li>Explorar</li>
+        <li class={navItemsStyle}>Inicio</li>
+        <li class={navItemsStyle}>Nosotros</li>
+        <li class={navItemsStyle}>Contacto</li>
+        <li class={navItemsStyle}>Explorar</li>
       </ul>
       <div class="lg:grid lg:place-content-center">
         <Image
@@ -29,15 +32,18 @@ import LogoImage from "@/assets/images/logo.png";
           class="w-18 h-18 2xl:w-22 2xl:h-22"
         />
       </div>
-      <div class="relative lg:flex lg:justify-end lg:items-center lg:gap-3">
-        <p class="hidden text-sm font-semibold lg:flex">CARRITO [2]</p>
-        <CartIcon size={26} />
-        <div
-          class="w-4.5 h-4.5 rounded-full bg-honey-400 absolute -top-2 -right-1 flex justify-center items-center"
-        >
-          <p class="font-bold text-xs text-white">2</p>
+      <a
+        href="/carrito"
+        class="relative lg:flex lg:justify-end lg:items-center"
+      >
+        <div class="flex cursor-pointer lg:gap-3">
+          <p class="hidden text-sm font-semibold lg:flex">
+            CARRITO <CartCount variant="text" client:only="react" />
+          </p>
+          <CartIcon size={26} />
+          <CartCount client:only="react" />
         </div>
-      </div>
+      </a>
     </nav>
   </Container>
 </header>

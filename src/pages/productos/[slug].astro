@@ -2,6 +2,8 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import Base from "@/layouts/Base.astro";
+import AddToCartButton from "@/components/Cart/AddToCartButton";
+import { formatPrice } from "@/lib/format";
 
 // Una ruta pre-generada por cada producto de la colección.
 // El slug del archivo (p. ej. "honey-md") se convierte en la URL /productos/honey-md.
@@ -51,12 +53,12 @@ const { name, description, image, price } = product.data;
         <div
           class="mt-2 flex items-center justify-between border-t border-[#828282] pt-6"
         >
-          <span class="text-2xl font-semibold">${price}</span>
-          <button
-            class="border-2 px-8 py-3 text-md tracking-wide transition hover:bg-honey-500 hover:text-white"
-          >
-            AÑADIR
-          </button>
+          <span class="text-2xl font-semibold">{formatPrice(price)}</span>
+          <AddToCartButton
+            id={product.id}
+            client:load
+            className="cursor-pointer border-2 px-8 py-3 text-md tracking-wide transition hover:bg-honey-500 hover:text-white"
+          />
         </div>
       </div>
     </div>

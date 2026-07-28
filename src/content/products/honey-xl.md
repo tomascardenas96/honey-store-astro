@@ -1,4 +1,5 @@
 ---
+id: honey-xl
 name: Miel pura de abejas x 1500kg
 description: Madera profunda con un golpe balsámico incisivo. Cosechada en la bruma matinal.
 image: ./images/x500gr.png
