@@ -9,6 +9,12 @@ on:
 jobs:
   quality:
     runs-on: ubuntu-latest
+    # PUBLIC_WHATSAPP_PHONE está declarada en el schema de astro:env, así que
+    # el build la exige. Acá va un valor de relleno: es una variable pública y
+    # el artefacto del CI no se despliega. Los secretos del formulario no hacen
+    # falta, se resuelven en runtime y no en build.
+    env:
+      PUBLIC_WHATSAPP_PHONE: "5493815551234"
     steps:
       - uses: actions/checkout@v4
 
