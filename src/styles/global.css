@@ -3,6 +3,8 @@
 
 @theme {
   /* COLORES DE FUENTE */
+  --color-primary: var(--color-honey-950);
+  --color-description: var(--color-honey-300);
   --color-primary-dark: rgb(240, 240, 240);
   --color-description-dark: rgb(199, 199, 199);
 

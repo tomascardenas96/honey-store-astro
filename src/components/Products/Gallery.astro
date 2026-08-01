@@ -22,7 +22,7 @@ const arrowClass =
       <div class="flex flex-col items-center gap-5 relative">
         <h1
           data-reveal="down"
-          class="font-display font-semibold text-lg lg:text-xl"
+          class="font-display font-semibold text-lg md:text-2xl lg:text-xl"
         >
           Nuestros Productos
         </h1>
@@ -37,7 +37,7 @@ const arrowClass =
           alt="Abeja decorativa"
           data-reveal="zoom"
           data-reveal-delay="120"
-          class="w-14 lg:w-16"
+          class="w-14 md:w-18 lg:w-16"
         />
       </div>
 
@@ -62,7 +62,7 @@ const arrowClass =
                     <Image
                       src={product.data.image}
                       alt={product.data.name}
-                      class="w-full flex-1 min-h-0 object-cover"
+                      class="w-full flex-1 min-h-0 object-cover opacity-80"
                     />
                     {/* shrink-0: el bloque de texto y precio nunca se comprime,
                         así la fila del botón siempre entra en la card. */}
