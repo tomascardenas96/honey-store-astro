@@ -1,0 +1,212 @@
+---
+import { Image } from "astro:assets";
+import { PUBLIC_WHATSAPP_PHONE } from "astro:env/client";
+import BeeIcon from "@/assets/images/bee-decorative.png";
+import Container from "../Container.astro";
+
+// El fondo del sitio (honey-25) es un blanco neutro, sin croma. Por eso los
+// escalones de tono acá son negro a baja opacidad y no ámbar: un relleno cálido
+// sobre un fondo neutro tiñe todo de amarillo. El color queda para los acentos.
+// El radio queda fuera de la base: los inputs son píldoras y el textarea no.
+// Si `rounded-full` viviera acá le ganaría a `rounded-card` del textarea, porque
+// Tailwind ordena los radios de menor a mayor y el último gana.
+// min-w-0: un <input> trae un ancho intrínseco de ~180px (size=20 por defecto) y
+// un ítem flex no se encoge por debajo de eso. Sin esto, la fila Nombre+Apellido
+// obliga a la tarjeta a ~443px y se desborda en cualquier teléfono real.
+const fieldStyle =
+  "grow min-w-0 h-13 lg:h-9 xl:h-11 border border-honey-950/8 bg-honey-950/3 pl-5 text-base lg:text-xs xl:text-sm text-honey-950 placeholder:text-honey-950/40 transition-colors duration-200 focus:border-transparent focus:outline-2 focus:outline-honey-500";
+
+const inputStyle = `${fieldStyle} rounded-full`;
+
+const buttonStyle =
+  "h-13 xl:h-11 px-6 lg:px-12 rounded-full text-base lg:text-xs xl:text-sm transition duration-200 ease-out-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-honey-500";
+
+const message =
+  "Hola!! Me interesaria comercializar sus productos, ¿me das mas info?";
+const parsedMessage = encodeURIComponent(message);
+---
+
+<section class="my-24 py-18">
+  <Container>
+    <div
+      data-reveal="zoom"
+      class="lg:h-110 xl:h-136 bg-ink-on-dark rounded-xs flex flex-col lg:flex-row gap-14 lg:gap-0 lg:border lg:border-honey-950/8 lg:shadow-card"
+    >
+      <form
+        data-contact-form
+        method="POST"
+        class="bg-ink-on-dark h-121 lg:h-full flex flex-col justify-between w-full rounded-[2px_0_0_2px] py-0 lg:py-11 xl:py-14 px-0 lg:px-13 xl:px-15"
+      >
+        <div class="flex flex-col gap-2 lg:gap-1 xl:gap-1 mb-2">
+          <h1
+            class="text-primary text-2xl lg:text-xl xl:text-[1.9rem] font-semibold tracking-wide text-center lg:text-left"
+          >
+            Contactanos!
+          </h1>
+          <p
+            class="text-base lg:text-xs xl:text-sm text-honey-950/60 text-center lg:text-left"
+          >
+            Sentite libre de hablar con nosotros y te responderemos cuanto antes
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 lg:gap-2 xl:gap-3">
+          <div class="flex gap-3 lg:gap-2 xl:gap-3">
+            <label class="sr-only" for="contacto-nombre">Nombre</label>
+            <input
+              id="contacto-nombre"
+              name="nombre"
+              type="text"
+              required
+              maxlength="80"
+              autocomplete="given-name"
+              class={inputStyle}
+              placeholder="Nombre"
+            /><label class="sr-only" for="contacto-apellido">Apellido</label>
+            <input
+              id="contacto-apellido"
+              name="apellido"
+              type="text"
+              required
+              maxlength="80"
+              autocomplete="family-name"
+              class={inputStyle}
+              placeholder="Apellido"
+            />
+          </div>
+          <div class="flex">
+            <label class="sr-only" for="contacto-email">E-mail</label>
+            <input
+              id="contacto-email"
+              name="email"
+              type="email"
+              required
+              maxlength="160"
+              autocomplete="email"
+              class={inputStyle}
+              placeholder="E-mail"
+            />
+          </div>
+        </div>
+        <p
+          class="text-base lg:text-xs xl:text-sm text-honey-950/60 text-center lg:text-left"
+        >
+          Contanos brevemente en que podriamos ayudarte..
+        </p>
+        <label class="sr-only" for="contacto-mensaje">Tu mensaje</label>
+        <textarea
+          id="contacto-mensaje"
+          name="mensaje"
+          required
+          minlength="10"
+          maxlength="2000"
+          class={`${fieldStyle} max-h-32 lg:max-h-24 xl:max-h-34 w-full rounded-card pt-3 resize-none mb-3`}
+          placeholder="Tu mensaje"></textarea>
+
+        <!-- Honeypot: fuera de pantalla y fuera del orden de tabulación. No lo
+        ve nadie salvo un bot que completa todos los campos que encuentra. -->
+        <div class="absolute -left-[9999px]" aria-hidden="true">
+          <label for="contacto-website">No completar</label>
+          <input
+            id="contacto-website"
+            name="website"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-center gap-3 lg:gap-4">
+          <button
+            type="submit"
+            class={`${buttonStyle} bg-honey-500 text-honey-25 hover:bg-honey-600 max-w-full lg:max-w-50 xl:max-w-60 shrink-0 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-honey-500`}
+            >Enviar Mensaje</button
+          >
+          <!-- aria-live anuncia el resultado a un lector de pantalla sin
+          robarle el foco a quien esté navegando por teclado. -->
+          <p
+            data-contact-status
+            role="status"
+            aria-live="polite"
+            class="text-base lg:text-xs xl:text-sm text-center lg:text-left empty:hidden data-[state=error]:text-red-700 data-[state=ok]:text-green-800"
+          >
+          </p>
+        </div>
+      </form>
+
+      <div
+        class="bg-honey-950/4 lg:border-l lg:border-honey-950/8 flex justify-center items-center w-full lg:w-130 xl:w-160 rounded-card lg:rounded-[0_2px_2px_0] px-5 py-8 md:px-10 md:py-10 lg:p-0"
+      >
+        <div
+          class="w-full lg:w-[60%] h-[64%] rounded-card border border-honey-950/8 bg-white shadow-card flex lg:flex-col overflow-hidden"
+        >
+          <div
+            class="w-2/5 shrink-0 lg:w-full lg:h-[46%] flex justify-center items-center"
+          >
+            <Image src={BeeIcon} alt="Icono de abeja" class="w-20 xl:w-30" />
+          </div>
+          <div
+            class="min-w-0 flex-1 h-full lg:flex-none lg:w-full lg:h-[54%] px-4 xl:px-2 py-5 xl:py-7 flex flex-col items-center text-center justify-between text-base lg:text-xs xl:text-sm"
+          >
+            <h2 class="font-bold text-honey-950">Revendé</h2>
+            <p class="leading-normal text-honey-950/60">
+              Si querés comercializar nuestros productos
+            </p>
+            <a
+              href={`https://wa.me/${PUBLIC_WHATSAPP_PHONE}?text=${parsedMessage}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`${buttonStyle} border border-honey-400 text-honey-700 hover:bg-honey-50 hover:border-honey-500 w-full max-w-50 xl:max-w-60 mt-2 xl:mt-4 flex items-center justify-center`}
+            >
+              Click Acá
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+  const status = document.querySelector<HTMLElement>("[data-contact-status]");
+  const submit = form?.querySelector<HTMLButtonElement>(
+    'button[type="submit"]',
+  );
+
+  if (form && status && submit) {
+    const idleLabel = submit.textContent ?? "Enviar Mensaje";
+
+    form.addEventListener("submit", async (event) => {
+      // El submit nativo recargaría la página: el home es estático y no tiene
+      // endpoint propio. La action viaja por fetch contra /_actions/.
+      event.preventDefault();
+
+      submit.disabled = true;
+      submit.textContent = "Enviando...";
+      status.textContent = "";
+      delete status.dataset.state;
+
+      const { error } = await actions.contacto(new FormData(form));
+
+      submit.disabled = false;
+      submit.textContent = idleLabel;
+
+      if (error) {
+        // isInputError separa "el visitante escribió algo inválido" de "el
+        // envío falló". El primero trae el detalle por campo; en el segundo el
+        // mensaje ya viene redactado desde la action.
+        status.dataset.state = "error";
+        status.textContent = isInputError(error)
+          ? (Object.values(error.fields).flat()[0] ?? "Revisá los datos.")
+          : error.message;
+        return;
+      }
+
+      form.reset();
+      status.dataset.state = "ok";
+      status.textContent = "¡Listo! Te respondemos a la brevedad.";
+    });
+  }
+</script>

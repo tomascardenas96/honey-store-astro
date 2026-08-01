@@ -1,0 +1,17 @@
+# Secretos del Worker para desarrollo local.
+# Copiá este archivo a `.dev.vars` (que está en .gitignore) y completá los
+# valores. Wrangler los inyecta en el runtime; NO van en .env, porque .env solo
+# alimenta las variables PUBLIC_ que se inlinean en el bundle del cliente.
+#
+# En producción no se usa este archivo, se suben con:
+#   npx wrangler secret put RESEND_API_KEY
+
+# API key de https://resend.com/api-keys
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
+
+# Casilla que recibe las consultas del formulario de contacto.
+CONTACT_TO_EMAIL=hola@tudominio.com
+
+# Remitente. El dominio tiene que estar verificado en Resend.
+# Para probar antes de verificarlo: onboarding@resend.dev
+CONTACT_FROM_EMAIL=Web Apiaré <contacto@tudominio.com>

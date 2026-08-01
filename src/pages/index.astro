@@ -9,7 +9,7 @@ import Base from "@/layouts/Base.astro";
 // Devuelve un array, cada elemento tipado según tu esquema Zod.
 const products = await getCollection("productos");
 import Footer from "@/components/Footer/Footer.astro";
-import Ads from "@/components/Ads/Ads.astro";
+import Contact from "@/components/Contact/Contact.astro";
 ---
 
 <Base title="Apiaré — Miel pura de nuestros apiarios">
@@ -17,7 +17,7 @@ import Ads from "@/components/Ads/Ads.astro";
     <Hero />
     <Banner />
     <Gallery products={products} />
-    <Ads />
+    <Contact />
     <Footer />
   </main>
 </Base>
