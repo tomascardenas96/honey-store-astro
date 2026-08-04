@@ -42,12 +42,12 @@ export default function CartView({ catalog }: Props) {
   }
 
   return (
-    <div className="mt-10 flex flex-col gap-8">
+    <div className="mt-6 flex flex-col gap-16">
       <ul className="flex flex-col">
         {lines.map((line) => (
           <li
             key={line.id}
-            className="flex flex-wrap items-center gap-4 border-b border-[#828282] py-5"
+            className="flex flex-wrap items-center gap-4 border-b border-[#828282] py-6"
           >
             <img
               src={line.image}

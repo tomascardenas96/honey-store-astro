@@ -1,0 +1,20 @@
+---
+import Base from "@/layouts/Base.astro";
+import CartView from "@/components/Cart/CartView";
+import { getCatalog } from "@/lib/catalog";
+import Container from "@/components/Container.astro";
+
+// El catálogo se resuelve en el build y viaja como prop a la isla.
+// La página sigue siendo estática: la isla solo pone las cantidades encima.
+const catalog = await getCatalog();
+---
+
+<Base title="Carrito — Apiaré">
+  <main class="mt-25 mx-auto px-6 pb-section">
+    <Container>
+      <h1 class="mt-8 font-display text-3xl" data-reveal="fade">Tu carrito</h1>
+
+      <CartView catalog={catalog} client:only="react" />
+    </Container>
+  </main>
+</Base>
