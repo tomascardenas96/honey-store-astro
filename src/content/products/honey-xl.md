@@ -1,6 +1,6 @@
 ---
-name: Miel pura de abejas x 1500kg
-description: Madera profunda con un golpe balsámico incisivo. Cosechada en la bruma matinal.
-image: ./images/x500gr.png
+name: Miel pura de abejas x 1.5kg
+description: Miel pura de abejas Apiaré artesanal tarro x 1.5kg.
+image: ../../assets/gallery/product-3.png
 price: 2500
 ---

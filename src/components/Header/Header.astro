@@ -6,38 +6,51 @@ import CartIcon from "./CartIcon.astro";
 import CartCount from "@/components/Cart/CartCount";
 import LogoImage from "@/assets/images/logo.png";
 
-const navItemsStyle = "cursor-pointer";
+// El subrayado repite las líneas decorativas de los títulos de sección:
+// crece desde la izquierda al hacer hover, con la misma curva del resto del sitio.
+const navItemsStyle =
+  "relative cursor-pointer transition-colors duration-200 hover:text-honey-600 after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:bg-honey-500 after:transition-transform after:duration-300 after:ease-out-soft hover:after:scale-x-100";
 ---
 
 <header
-  class="fixed top-0 w-full border-b border-line bg-ink-on-dark z-20 mask-b-from-19 xl:mask-b-from-25 text-honey-900"
+  class="fixed top-0 w-full border-b border-line bg-ink-on-dark z-50 mask-b-from-19 xl:mask-b-from-25 text-honey-900"
 >
   <Container>
     <nav
-      class="flex h-21 xl:h-28 items-center justify-between lg:grid lg:grid-cols-3"
+      class="flex h-21 xl:h-26 items-center justify-between lg:grid lg:grid-cols-3"
     >
       <BurgerMenuIcon size={30} class="lg:hidden" />
       <ul
         class="hidden lg:flex gap-6 2xl:gap-7 text-xs xl:text-xs 2xl:text-sm xl:font-semibold"
       >
-        <li class={navItemsStyle}>Inicio</li>
-        <li class={navItemsStyle}>Nosotros</li>
-        <li class={navItemsStyle}>Contacto</li>
-        <li class={navItemsStyle}>Explorar</li>
+        <li class={navItemsStyle}>
+          <a href="/#home">Inicio</a>
+        </li>
+        <li class={navItemsStyle}>
+          <a href="/#about">Nosotros</a>
+        </li>
+        <li class={navItemsStyle}>
+          <a href="/#products">Productos</a>
+        </li>
+        <li class={navItemsStyle}>
+          <a href="/#contact">Contacto</a>
+        </li>
       </ul>
       <div class="lg:grid lg:place-content-center">
-        <Image
-          src={LogoImage}
-          alt="Logo de Apiare"
-          class="w-18 h-18 2xl:w-22 2xl:h-22"
-        />
+        <a href="/">
+          <Image
+            src={LogoImage}
+            alt="Logo de Apiare"
+            class="w-18 h-18 2xl:w-22 2xl:h-22"
+          />
+        </a>
       </div>
       <a
-        href="/carrito"
-        class="relative lg:flex lg:justify-end lg:items-center"
+        href="/cart"
+        class="relative lg:flex lg:justify-end lg:items-center transition-colors duration-200 hover:text-honey-600"
       >
         <div class="flex cursor-pointer lg:gap-3">
-          <p class="hidden text-sm font-semibold lg:flex">
+          <p class="hidden text-xs xl:text-sm font-semibold lg:flex">
             CARRITO <CartCount variant="text" client:only="react" />
           </p>
           <CartIcon size={26} />

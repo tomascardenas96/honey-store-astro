@@ -16,13 +16,16 @@ const arrowClass =
   "absolute top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-honey-200/70 bg-honey-25/90 text-honey-700 shadow-card backdrop-blur-sm transition duration-200 ease-out-soft cursor-pointer hover:scale-105 hover:bg-white hover:text-honey-900 hover:shadow-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-honey-500 disabled:pointer-events-none";
 ---
 
-<section class="flex flex-col mt-24 lg:mt-20 xl:mt-24 gap-2 text-honey-900">
+<section
+  class="flex flex-col mt-24 lg:mt-20 xl:mt-24 gap-2 text-honey-900 relative"
+>
+  <div id="products" class="absolute -top-34"></div>
   <Container>
-    <div class="flex flex-col gap-3 2xl:gap-8">
+    <div class="flex flex-col gap-3 2xl:gap-6">
       <div class="flex flex-col items-center gap-5 relative">
         <h1
           data-reveal="down"
-          class="font-display font-semibold text-lg lg:text-xl"
+          class="font-display font-semibold text-2xl lg:text-xl"
         >
           Nuestros Productos
         </h1>
@@ -37,7 +40,7 @@ const arrowClass =
           alt="Abeja decorativa"
           data-reveal="zoom"
           data-reveal-delay="120"
-          class="w-14 lg:w-16"
+          class="w-14 md:w-18 lg:w-16"
         />
       </div>
 
@@ -46,7 +49,7 @@ const arrowClass =
           <ul
             data-carousel-track
             data-reveal-stagger="110"
-            class="flex gap-6 sm:gap-2 md:gap-0 2xl:gap-0 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 scrollbar-none [&::-webkit-scrollbar]:hidden"
+            class="flex gap-6 sm:gap-2 md:gap-0 2xl:gap-0 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-14 scrollbar-none [&::-webkit-scrollbar]:hidden"
           >
             {
               products.map((product) => (
@@ -54,7 +57,7 @@ const arrowClass =
                   data-reveal="zoom"
                   class="snap-center shrink-0 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 >
-                  <article class="flex flex-col gap-6 rounded-card p-0 h-140 sm:h-137 w-72 sm:w-60 md:w-68 lg:w-56 xl:w-52 2xl:w-56 mx-auto lg:items-center">
+                  <article class="group flex flex-col gap-5 rounded-card p-0 h-140 sm:h-122 w-72 sm:w-60 md:w-68 lg:w-56 xl:w-52 2xl:w-58 mx-auto lg:items-center">
                     {/* La imagen es la que cede espacio: flex-1 la deja crecer
                         con lo que sobra y min-h-0 le saca el min-height:auto
                         que, por defecto, impide que un hijo flex se encoja por
@@ -62,25 +65,25 @@ const arrowClass =
                     <Image
                       src={product.data.image}
                       alt={product.data.name}
-                      class="w-full flex-1 min-h-0 object-cover"
+                      class="w-full flex-1 min-h-0 object-cover opacity-80 transition duration-500 ease-out-soft group-hover:opacity-100 group-hover:-translate-y-1.5"
                     />
                     {/* shrink-0: el bloque de texto y precio nunca se comprime,
                         así la fila del botón siempre entra en la card. */}
-                    <div class="flex shrink-0 flex-col gap-6 lg:gap-6 xl:gap-5">
-                      <h3 class="font-body text-md xl:text-sm font-bold lg:max-w-[22ch] tracking-wide">
+                    <div class="flex shrink-0 flex-col gap-4 lg:gap-4 xl:gap-5 w-full">
+                      <h3 class="font-body text-md xl:text-sm font-extrabold lg:max-w-[22ch] tracking-wide">
                         {product.data.name.toUpperCase()}
                       </h3>
-                      <p class="text-smq lg:text-sm xl:text-xs leading-6 xl:leading-5">
+                      <p class="text-smq text-primary/65 lg:text-sm leading-6 xl:leading-6">
                         {product.data.description}
                       </p>
-                      <div class="flex h-24 shrink-0 border-t border-[#828282] items-center justify-between">
+                      <div class="flex h-20 shrink-0 border-t border-[#828282] items-center justify-between">
                         <span class="font-semibold text-xl lg:text-lg">
                           {formatPrice(product.data.price)}
                         </span>
                         <AddToCartButton
                           id={product.id}
                           client:load
-                          className="text-md lg:text-xs lg:font-light border-2 px-8 lg:px-7 py-3 lg:py-3 tracking-wide cursor-pointer transition hover:bg-honey-500 hover:text-white"
+                          className="text-md lg:text-xs lg:font-light border-2 px-8 lg:px-7 py-3 lg:py-3 tracking-wide cursor-pointer transition duration-200 ease-out-soft hover:bg-honey-500 hover:border-honey-500 hover:text-white"
                         />
                       </div>
                     </div>
