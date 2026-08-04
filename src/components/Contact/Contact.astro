@@ -1,8 +1,24 @@
 ---
-import { Image } from "astro:assets";
 import { PUBLIC_WHATSAPP_PHONE } from "astro:env/client";
-import BeeIcon from "@/assets/images/bee-decorative.png";
+import beeHexagon from "@/assets/contact/bee-hexagonal.png";
+import botanical from "@/assets/contact/contact-bg.png";
+import dipper from "@/assets/contact/panel-derecho.jpg";
+import honeyJar from "@/assets/contact/honey.png";
+import beeTrail from "@/assets/contact/recorrido.png";
 import Container from "../Container.astro";
+import ArrowRight from "../icons/ArrowRight.astro";
+import Mail from "../icons/Mail.astro";
+import MessageCircle from "../icons/MessageCircle.astro";
+import User from "../icons/User.astro";
+
+// Los assets van con <img> y no con <Image>: el image service de astro:assets
+// necesita sharp, que este proyecto no compila a propósito (pnpm-workspace.yaml
+// -> allowBuilds.sharp: false). El build actual sobrevive solo porque las
+// imágenes viejas tienen su .webp cacheado en node_modules/.astro/assets; una
+// imagen nueva servida con <Image> lo rompería. Estos PNG ya vienen recortados
+// al contenido y al tamaño de render, así que no hay nada que optimizar.
+// El import crudo igual pasa por Vite: hashea el archivo y expone width/height,
+// que van al markup para que el navegador reserve la caja y no haya CLS.
 
 // El fondo del sitio (honey-25) es un blanco neutro, sin croma. Por eso los
 // escalones de tono acá son negro a baja opacidad y no ámbar: un relleno cálido
@@ -10,156 +26,297 @@ import Container from "../Container.astro";
 // El radio queda fuera de la base: los inputs son píldoras y el textarea no.
 // Si `rounded-full` viviera acá le ganaría a `rounded-card` del textarea, porque
 // Tailwind ordena los radios de menor a mayor y el último gana.
-// min-w-0: un <input> trae un ancho intrínseco de ~180px (size=20 por defecto) y
-// un ítem flex no se encoge por debajo de eso. Sin esto, la fila Nombre+Apellido
-// obliga a la tarjeta a ~443px y se desborda en cualquier teléfono real.
 const fieldStyle =
-  "grow min-w-0 h-13 lg:h-9 xl:h-11 border border-honey-950/8 bg-honey-950/3 pl-5 text-base lg:text-xs xl:text-sm text-honey-950 placeholder:text-honey-950/40 transition-colors duration-200 focus:border-transparent focus:outline-2 focus:outline-honey-500";
+  "w-full border border-honey-950/5 bg-honey-950/2 pl-12 pr-5 text-base lg:text-sm text-honey-950 placeholder:text-honey-950/40 transition-colors duration-200 hover:border-honey-950/25 focus:border-transparent focus:outline-2 focus:outline-honey-500";
 
-const inputStyle = `${fieldStyle} rounded-full`;
+const inputStyle = `${fieldStyle} h-13 lg:h-11 xl:h-10 rounded-full`;
+
+// El icono no debe comerse el click ni el foco: el input tiene que recibirlos
+// aunque el cursor caiga sobre el dibujo.
+// La base no lleva posición vertical y cada uso la agrega. Si `top-1/2` viviera
+// acá, el `top-4` del textarea no le ganaría: entre dos clases que declaran la
+// misma propiedad no decide el orden en el atributo sino el orden en la hoja.
+const iconStyle =
+  "pointer-events-none absolute left-4.5 text-honey-700/55 size-4.5 xl:size-5";
+
+const inputIconStyle = `${iconStyle} top-1/2 -translate-y-1/2`;
+
+// El textarea alinea el icono con la primera línea, no con el centro de la caja.
+const textareaIconStyle = `${iconStyle} top-4 xl:top-4.5`;
 
 const buttonStyle =
-  "h-13 xl:h-11 px-6 lg:px-12 rounded-full text-base lg:text-xs xl:text-sm transition duration-200 ease-out-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-honey-500";
+  "group inline-flex items-center justify-center gap-2.5 h-13 xl:h-12 rounded-full text-base lg:text-sm font-medium transition duration-200 ease-out-soft hover:-translate-y-0.5 hover:shadow-card active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-honey-500";
+
+// Decoraciones: no aportan información, solo ambientan. Se ocultan del árbol de
+// accesibilidad y aparecen recién en lg, donde hay margen lateral para ellas.
+const decorStyle = "pointer-events-none absolute hidden lg:block select-none";
 
 const message =
   "Hola!! Me interesaria comercializar sus productos, ¿me das mas info?";
 const parsedMessage = encodeURIComponent(message);
 ---
 
-<section class="my-24 py-18">
+<section class="my-26 relative">
+  <div class="absolute -top-30" id="contact"></div>
   <Container>
     <div
       data-reveal="zoom"
-      class="lg:h-110 xl:h-136 bg-ink-on-dark rounded-xs flex flex-col lg:flex-row gap-14 lg:gap-0 lg:border lg:border-honey-950/8 lg:shadow-card"
+      class="relative overflow-hidden rounded-card flex flex-col lg:flex-row gap-10 lg:gap-0 lg:min-h-130 xl:min-h-150 bg-ink-on-dark lg:border lg:border-honey-950/8"
     >
-      <form
-        data-contact-form
-        method="POST"
-        class="bg-ink-on-dark h-121 lg:h-full flex flex-col justify-between w-full rounded-[2px_0_0_2px] py-0 lg:py-11 xl:py-14 px-0 lg:px-13 xl:px-15"
-      >
-        <div class="flex flex-col gap-2 lg:gap-1 xl:gap-1 mb-2">
-          <h1
-            class="text-primary text-2xl lg:text-xl xl:text-[1.9rem] font-semibold tracking-wide text-center lg:text-left"
-          >
-            Contactanos!
-          </h1>
-          <p
-            class="text-base lg:text-xs xl:text-sm text-honey-950/60 text-center lg:text-left"
-          >
-            Sentite libre de hablar con nosotros y te responderemos cuanto antes
-          </p>
-        </div>
-        <div class="flex flex-col gap-3 lg:gap-2 xl:gap-3">
-          <div class="flex gap-3 lg:gap-2 xl:gap-3">
-            <label class="sr-only" for="contacto-nombre">Nombre</label>
-            <input
-              id="contacto-nombre"
-              name="nombre"
-              type="text"
-              required
-              maxlength="80"
-              autocomplete="given-name"
-              class={inputStyle}
-              placeholder="Nombre"
-            /><label class="sr-only" for="contacto-apellido">Apellido</label>
-            <input
-              id="contacto-apellido"
-              name="apellido"
-              type="text"
-              required
-              maxlength="80"
-              autocomplete="family-name"
-              class={inputStyle}
-              placeholder="Apellido"
-            />
-          </div>
-          <div class="flex">
-            <label class="sr-only" for="contacto-email">E-mail</label>
-            <input
-              id="contacto-email"
-              name="email"
-              type="email"
-              required
-              maxlength="160"
-              autocomplete="email"
-              class={inputStyle}
-              placeholder="E-mail"
-            />
-          </div>
-        </div>
-        <p
-          class="text-base lg:text-xs xl:text-sm text-honey-950/60 text-center lg:text-left"
+      <!-- PANEL IZQUIERDO -->
+      <!-- min-w-0: sin esto el panel no baja de su ancho de contenido mínimo
+      (el título en display no parte) y le roba lugar al panel derecho. -->
+      <div class="relative flex-1 min-w-0 bg-ink-on-dark">
+        <img
+          src={botanical.src}
+          width={botanical.width}
+          height={botanical.height}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          class={`${decorStyle} -left-8 xl:-left-6 top-[10%] w-30 xl:w-38 opacity-55`}
+        />
+        <img
+          src={honeyJar.src}
+          width={honeyJar.width}
+          height={honeyJar.height}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          class={`${decorStyle} -left-10 xl:-left-10 -bottom-2 w-40 xl:w-52`}
+        />
+        <img
+          src={beeTrail.src}
+          width={beeTrail.width}
+          height={beeTrail.height}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          class={`${decorStyle} right-6 xl:right-10 bottom-8 xl:bottom-12 w-44 xl:w-60 opacity-80`}
+        />
+
+        <!-- El reveal va en los envoltorios y no en los campos ni en el botón:
+        reveal.css pisa la `transition` de todo elemento con data-reveal, así que
+        marcarlos a ellos mataría el hover del botón y el focus de los inputs.
+        El stagger solo reparte retrasos entre los hijos directos que tengan
+        data-reveal, por eso el honeypot queda afuera de la cuenta. -->
+        <form
+          data-contact-form
+          method="POST"
+          data-reveal-stagger="90"
+          class="relative z-10 flex flex-col gap-4 xl:gap-6 px-0 py-0 lg:pl-32 lg:pr-12 xl:pl-42 xl:pr-12 lg:py-10 xl:py-12 2xl:py-18"
         >
-          Contanos brevemente en que podriamos ayudarte..
-        </p>
-        <label class="sr-only" for="contacto-mensaje">Tu mensaje</label>
-        <textarea
-          id="contacto-mensaje"
-          name="mensaje"
-          required
-          minlength="10"
-          maxlength="2000"
-          class={`${fieldStyle} max-h-32 lg:max-h-24 xl:max-h-34 w-full rounded-card pt-3 resize-none mb-3`}
-          placeholder="Tu mensaje"></textarea>
-
-        <!-- Honeypot: fuera de pantalla y fuera del orden de tabulación. No lo
-        ve nadie salvo un bot que completa todos los campos que encuentra. -->
-        <div class="absolute -left-[9999px]" aria-hidden="true">
-          <label for="contacto-website">No completar</label>
-          <input
-            id="contacto-website"
-            name="website"
-            type="text"
-            tabindex="-1"
-            autocomplete="off"
-          />
-        </div>
-
-        <div class="flex flex-col lg:flex-row items-center gap-3 lg:gap-4">
-          <button
-            type="submit"
-            class={`${buttonStyle} bg-honey-500 text-honey-25 hover:bg-honey-600 max-w-full lg:max-w-50 xl:max-w-60 shrink-0 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-honey-500`}
-            >Enviar Mensaje</button
+          <header
+            data-reveal="left"
+            class="relative flex flex-col gap-3 xl:gap-4"
           >
-          <!-- aria-live anuncia el resultado a un lector de pantalla sin
-          robarle el foco a quien esté navegando por teclado. -->
-          <p
-            data-contact-status
-            role="status"
-            aria-live="polite"
-            class="text-base lg:text-xs xl:text-sm text-center lg:text-left empty:hidden data-[state=error]:text-red-700 data-[state=ok]:text-green-800"
-          >
-          </p>
-        </div>
-      </form>
+            <img
+              src={beeHexagon.src}
+              width={beeHexagon.width}
+              height={beeHexagon.height}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              class="mx-auto w-14 lg:mx-0 lg:absolute lg:-left-23 lg:-top-5 lg:w-16 xl:-left-30 xl:w-20"
+            />
+            <div class="flex flex-col gap-3 xl:gap-5">
+              <h2
+                class="font-display text-3xl xl:text-[2.5rem] font-bold leading-none tracking-tight text-honey-950 text-center lg:text-left"
+              >
+                ¡Contactanos!
+              </h2>
+              <span
+                class="block h-0.5 w-20 xl:w-24 bg-honey-500 mx-auto lg:mx-0"
+                aria-hidden="true"></span>
+            </div>
+            <p
+              class="text-base lg:text-sm text-honey-950/60 text-center lg:text-left lg:max-w-100"
+            >
+              Sentite libre de hablar con nosotros y te responderemos cuanto
+              antes.
+            </p>
+          </header>
 
+          <div data-reveal="up" class="flex flex-col gap-3 xl:gap-4">
+            <div class="flex gap-3 xl:gap-4">
+              <!-- min-w-0: un <input> trae un ancho intrínseco de ~180px
+              (size=20 por defecto) y un ítem flex no se encoge por debajo de
+              eso. Sin esto, la fila Nombre+Apellido obliga a la tarjeta a
+              ~443px y se desborda en cualquier teléfono real. -->
+              <div class="relative grow min-w-0 flex items-center">
+                <label class="sr-only" for="contacto-nombre">Nombre</label>
+                <User class={inputIconStyle} />
+                <input
+                  id="contacto-nombre"
+                  name="nombre"
+                  type="text"
+                  required
+                  maxlength="80"
+                  autocomplete="given-name"
+                  class={inputStyle}
+                  placeholder="Nombre"
+                />
+              </div>
+              <div class="relative grow min-w-0 flex items-center">
+                <label class="sr-only" for="contacto-apellido">Apellido</label>
+                <User class={inputIconStyle} />
+                <input
+                  id="contacto-apellido"
+                  name="apellido"
+                  type="text"
+                  required
+                  maxlength="80"
+                  autocomplete="family-name"
+                  class={inputStyle}
+                  placeholder="Apellido"
+                />
+              </div>
+            </div>
+
+            <div class="relative flex items-center">
+              <label class="sr-only" for="contacto-email">E-mail</label>
+              <Mail class={inputIconStyle} />
+              <input
+                id="contacto-email"
+                name="email"
+                type="email"
+                required
+                maxlength="160"
+                autocomplete="email"
+                class={inputStyle}
+                placeholder="E-mail"
+              />
+            </div>
+
+            <div class="relative flex">
+              <label class="sr-only" for="contacto-mensaje">Tu mensaje</label>
+              <MessageCircle class={textareaIconStyle} />
+              <textarea
+                id="contacto-mensaje"
+                name="mensaje"
+                required
+                minlength="10"
+                maxlength="2000"
+                rows="4"
+                class={`${fieldStyle} h-30 xl:h-24 rounded-card pt-3.5 resize-none`}
+                placeholder="Tu mensaje"></textarea>
+            </div>
+          </div>
+
+          <!-- Honeypot: fuera de pantalla y fuera del orden de tabulación. No lo
+          ve nadie salvo un bot que completa todos los campos que encuentra. -->
+          <div class="absolute -left-[9999px]" aria-hidden="true">
+            <label for="contacto-website">No completar</label>
+            <input
+              id="contacto-website"
+              name="website"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
+          <div
+            data-reveal="up"
+            class="flex flex-col lg:flex-row items-center gap-3 lg:gap-5"
+          >
+            <button
+              type="submit"
+              class={`${buttonStyle} bg-honey-500 text-honey-25 hover:bg-honey-600 w-full lg:w-auto lg:px-9 xl:px-8 shrink-0 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-honey-500 disabled:hover:translate-y-0 disabled:hover:shadow-none`}
+            >
+              <span data-label>Enviar Mensaje</span>
+              <ArrowRight
+                size={18}
+                class="transition-transform duration-200 ease-out-soft group-hover:translate-x-1"
+              />
+            </button>
+            <!-- aria-live anuncia el resultado a un lector de pantalla sin
+            robarle el foco a quien esté navegando por teclado. -->
+            <p
+              data-contact-status
+              role="status"
+              aria-live="polite"
+              class="text-base lg:text-sm text-center lg:text-left empty:hidden data-[state=error]:text-red-700 data-[state=ok]:text-green-800"
+            >
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- PANEL DERECHO -->
       <div
-        class="bg-honey-950/4 lg:border-l lg:border-honey-950/8 flex justify-center items-center w-full lg:w-130 xl:w-160 rounded-card lg:rounded-[0_2px_2px_0] px-5 py-8 md:px-10 md:py-10 lg:p-0"
+        class="relative flex justify-center items-center w-full lg:w-[38%] xl:w-[36%] shrink-0 px-5 py-10 md:px-10 lg:p-8 xl:p-10 overflow-hidden"
       >
+        <img
+          src={dipper.src}
+          width={dipper.width}
+          height={dipper.height}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 size-full object-cover saturate-60"
+        />
+        <!-- El velo arena tapa el amarillo saturado de la foto y la deja como
+        textura de fondo. Se abre hacia la derecha, que es donde el cucharón
+        tiene que seguir leyéndose. El saturate del <img> hace la otra mitad:
+        el fondo del original es un amarillo mucho más intenso que el arena y
+        sin bajarlo se impone al panel por más velo que se le ponga encima. -->
         <div
-          class="w-full lg:w-[60%] h-[64%] rounded-card border border-honey-950/8 bg-white shadow-card flex lg:flex-col overflow-hidden"
+          class="absolute inset-0 bg-linear-to-r from-sand via-sand/90 to-sand/50"
         >
-          <div
-            class="w-2/5 shrink-0 lg:w-full lg:h-[46%] flex justify-center items-center"
-          >
-            <Image src={BeeIcon} alt="Icono de abeja" class="w-20 xl:w-30" />
-          </div>
-          <div
-            class="min-w-0 flex-1 h-full lg:flex-none lg:w-full lg:h-[54%] px-4 xl:px-2 py-5 xl:py-7 flex flex-col items-center text-center justify-between text-base lg:text-xs xl:text-sm"
-          >
-            <h2 class="font-bold text-honey-950">Revendé</h2>
-            <p class="leading-normal text-honey-950/60">
+        </div>
+        <!-- El panal se pinta por máscara y no como imagen: hexagons.svg viene
+        con fill oscuro y acá hace falta en claro, sobre el arena.
+        Dos máscaras compuestas por intersección: la trama y un degradado que la
+        apaga hacia abajo a la izquierda, para que quede de textura en la esquina
+        superior y no de estampado sobre todo el panel. -->
+        <div
+          class="absolute inset-0 bg-honey-25/50 [mask-image:url('/hexagons.svg'),linear-gradient(to_bottom_left,black,transparent_30%)] [mask-size:58px_101px,cover] [mask-repeat:repeat,no-repeat] [mask-composite:intersect]"
+        >
+        </div>
+
+        <!-- La tarjeta entra sola: el fondo, el velo y el panal son del panel y
+        se quedan quietos. El retraso la deja aterrizar después de la columna
+        izquierda, para que el ojo lea primero el formulario. -->
+        <div
+          data-reveal="zoom"
+          data-reveal-delay="260"
+          class="relative z-10 w-[81%] max-w-78 xl:max-w-84 rounded-card bg-honey-25 shadow-raised px-7 xl:px-10 py-8 xl:py-10 flex flex-col items-center text-center gap-4 xl:gap-5"
+        >
+          <img
+            src={beeHexagon.src}
+            width={beeHexagon.width}
+            height={beeHexagon.height}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+            class="w-20 xl:w-24"
+          />
+          <span class="block h-0.5 w-16 bg-honey-500" aria-hidden="true"></span>
+          <div class="flex flex-col gap-2">
+            <h3 class="text-lg font-bold text-honey-950">Revendé</h3>
+            <p class="text-base lg:text-sm leading-normal text-honey-950/60">
               Si querés comercializar nuestros productos
             </p>
-            <a
-              href={`https://wa.me/${PUBLIC_WHATSAPP_PHONE}?text=${parsedMessage}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class={`${buttonStyle} border border-honey-400 text-honey-700 hover:bg-honey-50 hover:border-honey-500 w-full max-w-50 xl:max-w-60 mt-2 xl:mt-4 flex items-center justify-center`}
-            >
-              Click Acá
-            </a>
           </div>
+          <a
+            href={`https://wa.me/${PUBLIC_WHATSAPP_PHONE}?text=${parsedMessage}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`${buttonStyle} border border-honey-400 text-honey-700 hover:bg-honey-50 hover:border-honey-500 w-full max-w-56 mt-1`}
+          >
+            Click Acá
+            <ArrowRight
+              size={18}
+              class="transition-transform duration-200 ease-out-soft group-hover:translate-x-1"
+            />
+          </a>
         </div>
       </div>
     </div>
@@ -176,7 +333,11 @@ const parsedMessage = encodeURIComponent(message);
   );
 
   if (form && status && submit) {
-    const idleLabel = submit.textContent ?? "Enviar Mensaje";
+    // El botón ahora trae un <svg> adentro, así que el label no puede ir y
+    // volver por textContent: eso borraría la flecha. Se toca solo el nodo de
+    // texto y el icono queda intacto.
+    const label = submit.querySelector<HTMLElement>("[data-label]");
+    const idleLabel = label?.textContent ?? "Enviar Mensaje";
 
     form.addEventListener("submit", async (event) => {
       // El submit nativo recargaría la página: el home es estático y no tiene
@@ -184,14 +345,14 @@ const parsedMessage = encodeURIComponent(message);
       event.preventDefault();
 
       submit.disabled = true;
-      submit.textContent = "Enviando...";
+      if (label) label.textContent = "Enviando...";
       status.textContent = "";
       delete status.dataset.state;
 
       const { error } = await actions.contacto(new FormData(form));
 
       submit.disabled = false;
-      submit.textContent = idleLabel;
+      if (label) label.textContent = idleLabel;
 
       if (error) {
         // isInputError separa "el visitante escribió algo inválido" de "el

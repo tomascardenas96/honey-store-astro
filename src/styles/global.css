@@ -26,6 +26,10 @@
   --color-surface-dark: var(--color-honey-900);
   --color-ink-on-dark: var(--color-honey-25);
   --color-line: var(--color-honey-50);
+  /* Arena: neutro cálido de croma bajo. La rampa honey no sirve para fondos
+     grandes porque a esa luminosidad ya trae mucho croma (honey-100 tiene 0.055)
+     y una superficie de ese tamaño se lee amarilla, no beige. */
+  --color-sand: oklch(0.85 0.035 85);
 
   /* FUENTES */
   --font-display: "Cormorant Garamond Variable", "Cormorant Garamond", serif;
