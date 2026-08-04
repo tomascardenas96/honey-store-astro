@@ -5,7 +5,8 @@ import Bee from "@/assets/images/bee.png";
 import Jar from "@/assets/images/frasco.jpg";
 ---
 
-<article class="py-2 box-border">
+<article class="py-0 box-border relative">
+  <div id="about" class="absolute -top-30"></div>
   <div class="relative md:h-auto bg-banner py-14 lg:py-11 xl:py-12 2xl:py-14">
     <BannerContainer>
       <div
@@ -14,7 +15,7 @@ import Jar from "@/assets/images/frasco.jpg";
         <div class="flex flex-col gap-9 2xl:gap-9 relative">
           <h1
             data-reveal="left"
-            class="text-primary-dark text-base font-semibold tracking-wider"
+            class="text-primary-dark text-base font-bold tracking-wider"
           >
             ¿PORQUÉ ELEGIR MIEL APIARÉ?
           </h1>
@@ -47,13 +48,20 @@ import Jar from "@/assets/images/frasco.jpg";
           <div
             data-reveal="zoom"
             data-reveal-delay="180"
-            class="absolute p-0.5 xl:p-1 left-20 md:left-auto -bottom-37 md:-bottom-19 lg:-bottom-23 xl:-bottom-26 md:right-0 rounded-full border-2 border-dashed border-honey-500"
+            class="absolute left-20 md:left-auto -bottom-37 md:-bottom-19 lg:-bottom-23 xl:-bottom-26 md:right-0"
           >
-            <Image
-              src={Jar}
-              alt="Frasco de vidrio con miel dentro"
-              class="w-28 md:w-34 lg:w-40 xl:w-50 h-28 md:h-34 lg:h-40 xl:h-50 rounded-full object-cover"
-            />
+            <!-- El anillo vive en un div propio: reveal.css pisa la `transition`
+            de cualquier elemento con data-reveal, así que el hover no puede
+            animarse ahí. La foto contrarresta el giro para quedarse quieta. -->
+            <div
+              class="group rounded-full border-2 border-dashed border-honey-500 p-0.5 xl:p-1 transition-transform duration-700 ease-out-soft hover:rotate-[18deg]"
+            >
+              <Image
+                src={Jar}
+                alt="Frasco de vidrio con miel dentro"
+                class="w-28 md:w-34 lg:w-40 xl:w-50 h-28 md:h-34 lg:h-40 xl:h-50 rounded-full object-cover transition-transform duration-700 ease-out-soft group-hover:-rotate-[18deg]"
+              />
+            </div>
           </div>
         </div>
       </div>

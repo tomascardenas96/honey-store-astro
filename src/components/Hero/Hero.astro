@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import Hero from "@/assets/images/hero.png";
-import Search from "../icons/Search.astro";
 ---
 
 <section class="py-4 xl:py-5 2xl:py-10 2xl:pb-0">
@@ -19,16 +18,16 @@ import Search from "../icons/Search.astro";
     <div
       data-reveal="left"
       data-reveal-delay="220"
-      class="absolute left-[6%] xl:left-[4%] z-10 hidden h-full flex-col justify-center md:flex text-sm pb-28"
+      class="absolute left-[6%] xl:left-[4%] z-20 hidden h-full flex-col justify-center md:flex text-sm pb-28 pointer-events-none"
     >
-      <h2 class="text-sm font-bold leading-[1.45rem] 2xl:leading-6">
+      <h2 class="text-sm font-bold leading-[1.45rem] 2xl:leading-[1.55rem]">
         PRODUCTOS DE LA <br /> MEJOR CALIDAD
       </h2>
-      <button
-        class="py-1.5 w-6/7 bg-honey-400 rounded-full mt-4 flex justify-center gap-1"
-        >Explorar
-        <Search size="16" class="h-full" />
-      </button>
+      <a
+        href="#products"
+        class="pointer-events-auto py-1.5 w-full bg-honey-400 rounded-full mt-4 flex justify-center gap-1 cursor-pointer transition duration-200 ease-out-soft hover:bg-honey-500 hover:text-honey-25 hover:-translate-y-0.5 hover:shadow-card active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-honey-500"
+        >Ver Productos
+      </a>
     </div>
 
     <Image
