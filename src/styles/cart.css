@@ -1,0 +1,80 @@
+/* Animaciones del carrito.
+
+   La vista del carrito es una isla `client:only`, así que no puede usar
+   `data-reveal`: cuando el script del reveal recorre el DOM buscando elementos,
+   React todavía no montó nada. Acá las dispara el propio componente.
+
+   El bloque de `prefers-reduced-motion` de global.css deja todas estas
+   animaciones en 0.01ms, así que terminan antes de verse y los `animationend`
+   que espera el componente siguen llegando igual. */
+
+@layer components {
+  /* ENTRADA
+     Corre cuando el nodo se monta. React conserva el <li> mientras no cambie su
+     key, así que tocar una cantidad no la repite: al abrir la página escalona
+     todas las líneas y, si más tarde entra una nueva, anima solo esa. */
+  @keyframes cart-enter {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 1rem, 0);
+    }
+  }
+
+  /* SALIDA
+     La altura de partida la mide el componente y la pasa en
+     `--cart-exit-height`: no se puede animar desde `auto`, y cada línea mide
+     distinto según cuánto ocupe el nombre del producto. */
+  @keyframes cart-exit {
+    to {
+      height: 0;
+      padding-block: 0;
+      border-bottom-width: 0;
+      opacity: 0;
+      transform: translate3d(-1.5rem, 0, 0);
+    }
+  }
+
+  /* Latido para los números que cambian sin que su nodo se remonte. */
+  @keyframes cart-bump {
+    50% {
+      transform: scale(1.14);
+    }
+  }
+
+  /* El globito del header: entra desde cero cuando el carrito deja de estar
+     vacío y vuelve a saltar con cada cambio de cantidad, incluso si el cambio
+     lo hiciste en otra parte de la página. */
+  @keyframes cart-badge-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    60% {
+      transform: scale(1.15);
+    }
+  }
+
+  [data-cart-enter] {
+    animation: cart-enter 500ms var(--ease-out-soft) backwards;
+    animation-delay: calc(var(--cart-index, 0) * 70ms);
+  }
+
+  /* Va después de la entrada a propósito: misma especificidad, así que cuando
+     aparece `data-cart-exit` su `animation` pisa al de arriba y cancela la
+     entrada si todavía estaba corriendo. */
+  [data-cart-exit] {
+    height: var(--cart-exit-height);
+    overflow: hidden;
+    /* La línea ya se está yendo: que no acepte más clicks. */
+    pointer-events: none;
+    animation: cart-exit 320ms var(--ease-out-soft) forwards;
+  }
+
+  [data-cart-bump] {
+    animation: cart-bump 320ms var(--ease-out-soft);
+  }
+
+  [data-cart-badge] {
+    animation: cart-badge-pop 380ms var(--ease-out-soft);
+  }
+}

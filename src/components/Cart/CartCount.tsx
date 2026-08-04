@@ -15,8 +15,14 @@ export default function CartCount({ variant = "badge" }: Props) {
   // El globito aparece solo si hay algo: un "0" flotando se ve roto.
   if (count === 0) return null;
 
+  // La key es el número: al cambiar, el nodo se remonta y el globito vuelve a
+  // saltar. Los estilos viven en `@/styles/cart.css`.
   return (
-    <div className="w-4.5 h-4.5 rounded-full bg-honey-400 absolute -top-2 -right-1 flex justify-center items-center">
+    <div
+      key={count}
+      data-cart-badge
+      className="w-4.5 h-4.5 rounded-full bg-honey-400 absolute -top-2 -right-1 flex justify-center items-center"
+    >
       <p className="font-bold text-xs text-white">{count}</p>
     </div>
   );
