@@ -10,9 +10,11 @@ const catalog = await getCatalog();
 ---
 
 <Base title="Carrito — Apiaré">
-  <main class="mt-25 mx-auto px-6 pb-section">
+  <!-- El header mide h-21 y está fijo: con mt-21 el título quedaba pegado al
+  borde. Los 4 de más son el aire, los mismos que usa la ficha de producto. -->
+  <main class="mt-25 xl:mt-34 mx-auto pb-section">
     <Container>
-      <h1 class="mt-8 font-display text-3xl" data-reveal="fade">Tu carrito</h1>
+      <h1 class="font-display text-3xl" data-reveal="fade">Tu carrito</h1>
 
       <CartView catalog={catalog} client:only="react" />
     </Container>

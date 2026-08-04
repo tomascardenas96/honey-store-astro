@@ -16,23 +16,27 @@ import Instagram from "@/components/icons/Instagram.astro";
 import Tiktok from "@/components/icons/Tiktok.astro";
 
 const contactItems = [
-  { Icon: Phone, text: "(2281) - 992233", href: "tel:+542281992233" },
-  { Icon: Mail, text: "contacto@gmail.com", href: "mailto:contacto@gmail.com" },
+  { Icon: Phone, text: "(2281) - 376081", href: "tel:+5492281376081" },
+  {
+    Icon: Mail,
+    text: "facundobitar2023@gmail.com",
+    href: "mailto:facundobitar2023@gmail.com",
+  },
   { Icon: Clock, text: "Lun - Vie: 9:00 - 18:00" },
-  { Icon: Clock, text: "Sab: 9:00 - 13:00" },
+  { Icon: Clock, text: "Sáb: 9:00 - 13:00" },
 ];
 
 const socials = [
-  { Icon: Facebook, label: "Facebook", href: "https://facebook.com" },
-  { Icon: Instagram, label: "Instagram", href: "https://instagram.com" },
-  { Icon: Tiktok, label: "TikTok", href: "https://tiktok.com" },
+  { Icon: Facebook, label: "Facebook", href: "#" },
+  { Icon: Instagram, label: "Instagram", href: "#" },
+  { Icon: Tiktok, label: "TikTok", href: "#" },
 ];
 
 const navLinks = [
-  { text: "Inicio", href: "/" },
-  { text: "Nosotros", href: "#nosotros" },
-  { text: "Contacto", href: "#contacto" },
-  { text: "Explorar", href: "#productos" },
+  { text: "Inicio", href: "/#" },
+  { text: "Nosotros", href: "/#about" },
+  { text: "Productos", href: "/#products" },
+  { text: "Contacto", href: "/#contact" },
 ];
 ---
 
@@ -43,7 +47,7 @@ const navLinks = [
     >
       <Image
         src={Logo}
-        alt="Logo de Apiare"
+        alt="Logo de Apiaré"
         data-reveal="down"
         class="w-36 lg:w-30 2xl:w-34 object-contain"
       />
@@ -106,28 +110,32 @@ const navLinks = [
         <MapPin slot="icon" size={19} />
         <p class="flex items-center gap-3 text-sm text-honey-800 lg:leading-6">
           <MapPin size={18} class="shrink-0 text-honey-500 lg:hidden" />
-          Tucuman 324, Benito Juarez.
+          Tucumán 324, Benito Juárez.
         </p>
       </FooterSection>
 
-      <FooterSection title="Seguínos">
+      <FooterSection title="Seguinos">
         <Users slot="icon" size={19} />
         <ul
           class="flex items-center lg:flex-col lg:items-start gap-3 lg:gap-4 2xl:gap-5"
         >
           {
             socials.map(({ Icon, label, href }) => (
-              <li class="flex gap-2">
+              <li>
                 <a
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={label}
-                  class="grid size-11 lg:size-auto place-items-center rounded-full border lg:border-none border-honey-400 text-honey-500 transition hover:-translate-y-0.5 hover:border-honey-500 hover:bg-honey-500 hover:text-honey-25"
+                  class="group flex items-center gap-2 rounded-full transition duration-200 ease-out-soft hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-honey-500"
                 >
-                  <Icon size={19} />
+                  <span class="grid size-11 lg:size-6 shrink-0 place-items-center rounded-full border lg:border-none border-honey-400 text-honey-500 transition duration-200 ease-out-soft group-hover:border-honey-500 group-hover:bg-honey-500 group-hover:text-honey-25 group-hover:shadow-card lg:group-hover:bg-transparent lg:group-hover:text-honey-600">
+                    <Icon size={19} />
+                  </span>
+                  <span class="hidden lg:block text-sm text-honey-800 transition duration-200 ease-out-soft group-hover:text-honey-600">
+                    {label}
+                  </span>
+                  <span class="sr-only lg:hidden">{label}</span>
                 </a>
-                <p class="hidden lg:block text-honey-800 text-sm">{label}</p>
               </li>
             ))
           }
